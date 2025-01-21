@@ -1,0 +1,9 @@
+aiosqlite
+asyncua
+fastapi
+opcua
+pydantic
+SQLAlchemy
+uvicorn
+python-dotenv
+pydantic_settings
