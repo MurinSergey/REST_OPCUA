@@ -6,5 +6,5 @@ router = APIRouter(
 )
 
 @router.get("/")
-async def getHello():
+async def get_hello():
     return "Для изучния API перейдите на /docs"
