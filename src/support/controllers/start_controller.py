@@ -9,5 +9,5 @@ router = APIRouter(
         path="/",
         summary="Стартовая страница сервиса"
 )
-async def get_hello():
+async def home():
     return "Для изучния API перейдите на /docs"
