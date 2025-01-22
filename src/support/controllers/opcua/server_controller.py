@@ -2,13 +2,33 @@ from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/opcua",
-    tags=["Запросы к серверу OPCUA"]
+    tags=["OPCUA - запросы к серверу"]
 )
 
 @router.get(
-        path="/",
+        path="/info",
         summary="Получить информацию о OPCUA сервере"
 )
 async def get_info():
     return "Вы подключены к OPCUA серверу"
 
+@router.post(
+        path="/subscribe",
+        summary="Обновить подписку на узлы"
+)
+async def subscribe_nodes():
+    return "Подписки обновлены"
+
+@router.post(
+        path="/connect",
+        summary="Подключиться к OPCUA серверу"
+)
+async def connect():
+    return "OPC подключен"
+
+@router.post(
+        path="/disconnect",
+        summary="Отключится от OPCUA сервера"
+)
+async def disconnect():
+    return "OPC отключен"

@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/opcua/tags",
-    tags=["Запросы к тегам на которые подписан сервер OPCUA"]
+    tags=["OPCUA - запросы к тегам на которые подписан сервер"]
 )
 
 @router.get(
@@ -14,7 +14,7 @@ async def get_tags():
 
 @router.get(
         path="/{nodeID}",
-        summary="Получить текщее и историческое значение тега"    
+        summary="Получить текущее и историческое значение тега"    
 )
 async def get_tag(nodeID: str, start_date: int = None, end_date: int = None):
     if (start_date is not None):
