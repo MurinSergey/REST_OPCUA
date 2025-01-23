@@ -4,12 +4,13 @@ from src.config import settings
 from src.models.db import setup_database
 from src.routers import routers
 
+#Функция которая собирает FastAPI
 def get_application() -> FastAPI:
     application = FastAPI(
         title=settings.project.name,
         version=settings.project.version
     )
-    application.include_router(routers)
+    application.include_router(routers) #Подключаем все "ручки/роуты"
     return application
 
 app = get_application()

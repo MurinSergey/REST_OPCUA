@@ -14,9 +14,9 @@ async def get_info():
 
 @router.post(
         path="/subscribe",
-        summary="Обновить подписку на узлы"
+        summary="Обновить подписку на теги"
 )
-async def subscribe_nodes():
+async def subscribe_tags():
     return "Подписки обновлены"
 
 @router.post(
