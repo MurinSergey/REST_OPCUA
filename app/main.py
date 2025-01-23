@@ -1,7 +1,8 @@
-import uvicorn
+import uvicorn, asyncio
 from fastapi import FastAPI
-from src.routers import routers
 from src.config import settings
+from src.models.db import setup_database
+from src.routers import routers
 
 def get_application() -> FastAPI:
     application = FastAPI(
@@ -14,4 +15,5 @@ def get_application() -> FastAPI:
 app = get_application()
 
 if __name__ == "__main__":
+    asyncio.run(setup_database())
     uvicorn.run("main:app", host=settings.fastapi.host, port=settings.fastapi.port, reload=True)
