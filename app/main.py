@@ -2,7 +2,7 @@ import uvicorn
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from src.config import settings
-from src.models.db import setup_database
+from src.config.db.db_helper import setup_database
 from src.routers import routers
 
 #Функция жизни приложения

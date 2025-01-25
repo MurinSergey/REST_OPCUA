@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import TIMESTAMP, func
+from sqlalchemy import func
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
 
 class BaseModel(DeclarativeBase):
