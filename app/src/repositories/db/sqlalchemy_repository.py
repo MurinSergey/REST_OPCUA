@@ -1,13 +1,8 @@
-from typing import Generic, Type, TypeVar
-from pydantic import BaseModel
+from typing import Generic, Type
 from sqlalchemy import delete, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from .db_base_repository import IAbstractDbRepository
-from ...models.db.tables import BaseModel as Base
-
-ModelType = TypeVar("ModeType", bound=Base) # Может быть любым подтипом от tables.BaseModel
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)  # Может быть любым подтипом от pydantic.BaseModel
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)  # Может быть любым подтипом от pydantic.BaseModel
+from ...models.db.tables import ModelType, CreateSchemaType, UpdateSchemaType
 
 class SqlAlchemyRepository(IAbstractDbRepository, Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 

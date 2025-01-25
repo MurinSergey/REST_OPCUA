@@ -1,5 +1,7 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+
+from ...service.db_opcua_tags_service import db_opcua_tags_service
 
 from ...repositories.db import opcua_tags_repository
 from ...schemas.db.opcua_tags_schema import SOpcuaTagCreate, SOpcuaTagResponse, SOpcuaTagUpdate
@@ -32,9 +34,11 @@ async def get_tag(tag_name_get: str) -> list[SOpcuaTagResponse]:
 async def add_tag(
     tag: Annotated[SOpcuaTagCreate, Depends()],
 ) -> SOpcuaTagResponse:
-    tag_dict = tag.model_dump()
-    tag = await opcua_tags_repository.create(tag_dict)
-    return tag
+    try:
+        res = await db_opcua_tags_service.create(tag)
+        return res
+    except Exception:
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag.tag_name=}")
 ####################################################################################
 @router.post(
         path="/update/{tag_name_update}",
@@ -44,14 +48,19 @@ async def update_tag(
     tag_name_update: str,
     data: Annotated[SOpcuaTagUpdate, Depends()]
 ) -> SOpcuaTagResponse:
-    data_dict = data.model_dump()
-    tag = await opcua_tags_repository.update(data_dict, tag_name=tag_name_update)
-    return tag
+    try:
+        res = await db_opcua_tags_service.update(data, tag_name_update)
+        return res
+    except Exception:
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag_name_update=}")
 ####################################################################################
 @router.post(
         path="/delete/{tag_name_delete}",
         summary="Удалить тег из базы данных"
 )
 async def delete_tag(tag_name_delete: str) -> SOpcuaTagResponse:
-    tag = await opcua_tags_repository.delete(tag_name=tag_name_delete)
-    return tag
+    try:
+        res = await db_opcua_tags_service.delete(tag_name_delete)
+        return res
+    except Exception:
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag_name_delete=}")

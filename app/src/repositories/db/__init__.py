@@ -1,1 +1,2 @@
 from .opcua_tags_repository import opcua_tags_repository
+from .db_base_repository import IAbstractDbRepository

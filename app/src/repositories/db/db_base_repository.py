@@ -3,17 +3,17 @@ from abc import ABC, abstractmethod
 
 class IAbstractDbRepository(ABC):
     @abstractmethod
-    async def create():
+    async def create(self, **kwargs):
         raise NotImplementedError
     
     @abstractmethod
-    async def update():
+    async def update(self, **kwargs):
         raise NotImplementedError
     
     @abstractmethod
-    async def delete():
+    async def delete(self, **kwargs):
         raise NotImplementedError
     
     @abstractmethod
-    async def get_single():
+    async def get_single(self, **kwargs):
         raise NotImplementedError
