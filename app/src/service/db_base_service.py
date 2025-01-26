@@ -14,3 +14,6 @@ class BaseService():
     
     async def delete(self, **filters) -> ModelType:
         return await self._repo.delete(**filters)
+    
+    async def get_single(self, **filters) -> ModelType:
+        return await self._repo.get_single(**filters)

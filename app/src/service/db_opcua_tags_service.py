@@ -32,5 +32,23 @@ class DbOpcuaTagsService(BaseService):
         except Exception:
             print(f">>>>>Ошибка удаления тега {tag_name}")
             raise Exception()
+        
+    async def get_single(self, tag_name) -> OpcuaTagModel:
+        try:
+            res = await super().get_single(tag_name=tag_name)
+            print(f">>>>>Тег {res.tag_name} успешно получен из базы")
+            return res
+        except Exception:
+            print(f">>>>>Ошибка получения тега {tag_name}")
+            raise Exception()
+        
+    async def get_all(self) -> list[OpcuaTagModel]:
+        try:
+            res = await self._repo.get_all()
+            print(f">>>>>Успешно получен список тегов")
+            return res
+        except Exception:
+            print(f">>>>>Ошибка получения списка тегов")
+            raise Exception()
 
 db_opcua_tags_service = DbOpcuaTagsService(repo=opcua_tags_repository)

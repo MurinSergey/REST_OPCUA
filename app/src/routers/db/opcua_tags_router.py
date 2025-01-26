@@ -1,9 +1,6 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
-
 from ...service.db_opcua_tags_service import db_opcua_tags_service
-
-from ...repositories.db import opcua_tags_repository
 from ...schemas.db.opcua_tags_schema import SOpcuaTagCreate, SOpcuaTagResponse, SOpcuaTagUpdate
 
 router = APIRouter(
@@ -16,16 +13,22 @@ router = APIRouter(
         summary="Получить список всех тегов из базы данных"
 )
 async def get_tags() -> list[SOpcuaTagResponse]:
-    tags = await opcua_tags_repository.get_all()
-    return tags
+    try:
+        res = await db_opcua_tags_service.get_all()
+        return res
+    except Exception:
+        raise HTTPException(status_code=418, detail="ОШИБКА: неверный получения списка тегов")
 ####################################################################################
 @router.get(
         path="/getone/{tag_name_get}",
         summary="Получить указанный тег из базы данных",
 )
 async def get_tag(tag_name_get: str) -> list[SOpcuaTagResponse]:
-    tags = await opcua_tags_repository.get_single(tag_name=tag_name_get)
-    return tags
+    try:
+        res = await db_opcua_tags_service.get_single(tag_name_get)
+        return res
+    except Exception:
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag_name_get=}")
 ####################################################################################
 @router.post(
         path="/addone",

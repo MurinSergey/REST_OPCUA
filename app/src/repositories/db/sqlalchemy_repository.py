@@ -18,11 +18,11 @@ class SqlAlchemyRepository(IAbstractDbRepository, Generic[ModelType, CreateSchem
                 return res.scalars().all()
 
         #Метод для получения записи по имени тега
-        async def get_single(self, **filters) -> list[ModelType]:
+        async def get_single(self, **filters) -> ModelType:
             async with self._session_factory() as session:
                 stmt = select(self.model).filter_by(**filters).order_by("id")
                 res = await session.execute(stmt)
-                return res.scalars().all()
+                return res.scalar_one()
                 
         #Медот добавления запсиси в базу
         async def create(self, data: CreateSchemaType) -> ModelType:
