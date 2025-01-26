@@ -11,8 +11,11 @@ from src.config.opcua.opcua_helper import main_loop
 @asynccontextmanager
 async def lifespan(app: FastAPI):
         await setup_database()
+        await asyncio.sleep(2)
         print(">>>>>БАЗА ДАННЫХ ГОТОВА")
-        asyncio.create_task(main_loop())
+        task = asyncio.create_task(main_loop())
+        await asyncio.sleep(2)
+        print(">>>>>ПРОЦЕСС OPC ЗАПУЩЕН ")
         yield
         print(">>>>>ВЫКЛЮЧЕНИЕ")
 

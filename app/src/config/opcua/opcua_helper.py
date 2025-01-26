@@ -23,20 +23,15 @@ async def start_subscription(url:str, nodes: list):
         print(subscription.parameters.MaxNotificationsPerPublish)
         var = [client.get_node(node) for node in nodes]
         await subscription.subscribe_data_change(var)
-        #print([i.node.nodeid.to_string() for i in subscription._monitored_items.values()])
+        #print([i.node.nodeid.to_string() for in subscription._monitored_items.values()])
         while 1:
             await asyncio.sleep(1)
             await client.check_connection()
 
 async def main_loop():
     while 1:
-        print(">>>>>ПОДКЛЮЧЕНИЕ")
+        print(">>>>>ПОДКЛЮЧЕНИЕ К OPC")
         try:
             await start_subscription("opc.tcp://ES-BPASUTP-163:53530/OPCUA/SimulationServer", nodes)
         except (ConnectionError, ua.UaError, TimeoutError):
             await asyncio.sleep(1)
-
-
-
-if __name__ == "__main__":
-    asyncio.run(main_loop())
