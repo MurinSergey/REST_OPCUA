@@ -20,6 +20,7 @@ class OpcUaConfig(ConfigBase):
     security: str
     login: SecretStr
     password: SecretStr
+    reconnect_time: int
 
 class DatabaseConfig(ConfigBase):
     model_config = SettingsConfigDict(env_prefix="db_")

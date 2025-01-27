@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class IAbstractDbRepository(ABC):
+
     @abstractmethod
     async def create(self, **kwargs):
         raise NotImplementedError
@@ -16,4 +17,8 @@ class IAbstractDbRepository(ABC):
     
     @abstractmethod
     async def get_single(self, **kwargs):
+        raise NotImplementedError
+    
+    @abstractmethod
+    async def get_all(self):
         raise NotImplementedError

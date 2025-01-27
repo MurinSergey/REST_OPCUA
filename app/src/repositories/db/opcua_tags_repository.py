@@ -1,4 +1,4 @@
-from .sqlalchemy_repository import SqlAlchemyRepository
+from ..sqlalchemy_repository import SqlAlchemyRepository
 from ...models.db.tables.opcua_tags_model import OpcuaTagModel
 from ...schemas.db.opcua_tags_schema import SOpcuaTagCreate, SOpcuaTagUpdate
 from ...config.db.db_helper import async_session_maker

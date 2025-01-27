@@ -16,7 +16,6 @@ class SOpcuaTagDelete(SOpcuaTagBase):
 
 class SOpcuaTagResponse(SOpcuaTagBase):
     id: int
-    activated: bool = False
-    archive: bool = False
+    archive: bool
     created_at: datetime
     updated_at: datetime

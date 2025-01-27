@@ -17,7 +17,7 @@ async def get_tags() -> list[SOpcuaTagResponse]:
         res = await db_opcua_tags_service.get_all()
         return res
     except Exception:
-        raise HTTPException(status_code=418, detail="ОШИБКА: неверный получения списка тегов")
+        raise HTTPException(status_code=418, detail="ОШИБКА: получения списка тегов")
 ####################################################################################
 @router.get(
         path="/getone/{tag_name_get}",

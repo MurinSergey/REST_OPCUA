@@ -1,19 +1,22 @@
-from ..repositories.db import IAbstractDbRepository
-from ..models.db.tables import ModelType, CreateSchemaType, UpdateSchemaType
+from abc import ABC, abstractmethod
 
-class BaseService():
-
-    def __init__(self, repo: IAbstractDbRepository) -> None:
-        self._repo: IAbstractDbRepository = repo
+class IAbstractDbService(ABC):
+    @abstractmethod
+    async def create(self, **kwargs):
+        raise NotImplementedError
     
-    async def create(self, model: CreateSchemaType) -> ModelType:
-        return await self._repo.create(model.model_dump())
+    @abstractmethod
+    async def update(self, **kwargs):
+        raise NotImplementedError
     
-    async def update(self, model: UpdateSchemaType, **filters) -> ModelType:
-        return await self._repo.update(model.model_dump(), **filters)
+    @abstractmethod
+    async def delete(self, **kwargs):
+        raise NotImplementedError
     
-    async def delete(self, **filters) -> ModelType:
-        return await self._repo.delete(**filters)
+    @abstractmethod
+    async def get_single(self, **kwargs):
+        raise NotImplementedError
     
-    async def get_single(self, **filters) -> ModelType:
-        return await self._repo.get_single(**filters)
+    @abstractmethod
+    async def get_all(self):
+        raise NotImplementedError
