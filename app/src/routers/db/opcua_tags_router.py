@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
-from ...service.db_opcua_tags_service import db_opcua_tags_service
-from ...schemas.db.opcua_tags_schema import SOpcuaTagCreate, SOpcuaTagResponse, SOpcuaTagUpdate
+from ...service import db_opcua_tags_service
+from ...schemas.db import SOpcuaTagCreate, SOpcuaTagResponse
 
 router = APIRouter(
     prefix="/db/tags",
@@ -14,21 +14,23 @@ router = APIRouter(
 )
 async def get_tags() -> list[SOpcuaTagResponse]:
     try:
-        res = await db_opcua_tags_service.get_all()
+        res = await db_opcua_tags_service.get_all(order="tag_name")
         return res
-    except Exception:
+    except Exception as err:
+        print(type(err))
         raise HTTPException(status_code=418, detail="ОШИБКА: получения списка тегов")
 ####################################################################################
 @router.get(
-        path="/getone/{tag_name_get}",
+        path="/getone/{req_tag_name}",
         summary="Получить указанный тег из базы данных",
 )
-async def get_tag(tag_name_get: str) -> list[SOpcuaTagResponse]:
+async def get_tag(req_tag_name: str) -> SOpcuaTagResponse:
     try:
-        res = await db_opcua_tags_service.get_single(tag_name_get)
+        res = await db_opcua_tags_service.get_single(tag_name=req_tag_name)
         return res
-    except Exception:
-        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag_name_get=}")
+    except Exception as err:
+        print(type(err))
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {req_tag_name=}")
 ####################################################################################
 @router.post(
         path="/addone",
@@ -40,30 +42,33 @@ async def add_tag(
     try:
         res = await db_opcua_tags_service.create(tag)
         return res
-    except Exception:
-        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag.tag_name=}")
+    except Exception as err:
+        print(type(err))
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag=}")
 ####################################################################################
 @router.post(
-        path="/update/{tag_name_update}",
-        summary="Изменить выбранный тег"
+        path="/update/{req_tag_name}",
+        summary="Изменить выбранный тег",
 )
 async def update_tag(
-    tag_name_update: str,
-    data: Annotated[SOpcuaTagUpdate, Depends()]
+    req_tag_name: str,
+    data: Annotated[SOpcuaTagCreate, Depends()]
 ) -> SOpcuaTagResponse:
     try:
-        res = await db_opcua_tags_service.update(data, tag_name_update)
+        res = await db_opcua_tags_service.update(data, tag_name=req_tag_name)
         return res
-    except Exception:
-        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag_name_update=}")
+    except Exception as err:
+        print(type(err))
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {req_tag_name=}")
 ####################################################################################
 @router.post(
-        path="/delete/{tag_name_delete}",
+        path="/delete/{req_tag_name}",
         summary="Удалить тег из базы данных"
 )
-async def delete_tag(tag_name_delete: str) -> SOpcuaTagResponse:
+async def delete_tag(req_tag_name: str) -> SOpcuaTagResponse:
     try:
-        res = await db_opcua_tags_service.delete(tag_name_delete)
+        res = await db_opcua_tags_service.delete(tag_name=req_tag_name)
         return res
-    except Exception:
-        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {tag_name_delete=}")
+    except Exception as err:
+        print(type(err))
+        raise HTTPException(status_code=418, detail=f"ОШИБКА: неверный {req_tag_name=}")
