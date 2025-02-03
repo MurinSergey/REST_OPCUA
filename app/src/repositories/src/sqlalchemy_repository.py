@@ -1,4 +1,4 @@
-from typing import Generic, Type
+from typing import Generic, Type, List
 from sqlalchemy import delete, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from .crud_base_repository import IAbstractCrudRepository
@@ -11,7 +11,7 @@ class SqlAlchemyRepository(IAbstractCrudRepository, Generic[SqlAlchemyModelType,
             self.model = model
 
         #Метод для получения всех записей
-        async def get_all(self, order: str) -> list[SqlAlchemyModelType]:
+        async def get_all(self, order: str) -> List[SqlAlchemyModelType]:
             async with self._session_factory() as session:
                 stms = select(self.model).order_by(order)
                 res = await session.execute(stms)
@@ -20,7 +20,7 @@ class SqlAlchemyRepository(IAbstractCrudRepository, Generic[SqlAlchemyModelType,
         #Метод для получения записи по имени тега
         async def get_single(self, **filters) -> SqlAlchemyModelType:
             async with self._session_factory() as session:
-                stmt = select(self.model).filter_by(**filters).order_by("id")
+                stmt = select(self.model).filter_by(**filters)#.order_by("id")
                 res = await session.execute(stmt)
                 return res.scalar_one()
                 

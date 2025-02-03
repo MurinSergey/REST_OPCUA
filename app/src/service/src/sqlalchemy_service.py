@@ -1,4 +1,4 @@
-from typing import Generic
+from typing import Generic, List
 from .crud_base_service import IAbstractCrudService
 from ...repositories import IAbstractCrudRepository
 from ...models.models_type import CreateSchemaType, ResponseSchemaType
@@ -14,7 +14,7 @@ class SqlAlchemyService(IAbstractCrudService, Generic[CreateSchemaType, Response
     async def get_single(self, **filters) -> ResponseSchemaType:
         return await self._repo.get_single(**filters)
     
-    async def get_all(self, order: str) -> list[ResponseSchemaType]:
+    async def get_all(self, order: str) -> List[ResponseSchemaType]:
         return await self._repo.get_all(order)
     
     async def update(self, model: CreateSchemaType, **filters) -> ResponseSchemaType:
