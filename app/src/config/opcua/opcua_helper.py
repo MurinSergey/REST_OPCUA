@@ -1,4 +1,5 @@
 import asyncio
+from typing import List
 
 from asyncua import Client, Node, ua
 from asyncua.common.subscription import DataChangeNotif
@@ -7,7 +8,7 @@ from ...config import settings
 from ...models.opcua.tables import OpcuaCurrentValue
 
 #Хранилище считываемых узлов/тегов
-monitored_items: list[OpcuaCurrentValue] = []
+monitored_items: List[OpcuaCurrentValue] = []
 
 nodes = [
     "ns=3;i=1004",

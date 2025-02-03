@@ -63,7 +63,7 @@ class ListRepository(IAbstractCrudRepository, Generic[ListModelType, CreateSchem
         for itm in res:
             for field_in, info_in in data.model_fields.items():
                 if field_in in itm.model_fields.keys():
-                    itm.model_fields(field_in) = info_in
+                    itm.model_fields[field_in] = info_in
         return res[0].model_copy()
     
     #Метод для удаления записи запсиси в базе
