@@ -2,11 +2,11 @@ import asyncio
 import uvicorn
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from src.config import settings
-from src.config.db.db_helper import setup_database
-from src.routers import routers
-from src.config.opcua.opcua_helper import main_loop
-from src.config.opcua.opcua_helper import opcua_client
+from app.config import settings
+from app.config.db.db_helper import setup_database
+from app.routers import routers
+from app.config.opcua.opcua_helper import main_loop
+from app.config.opcua.opcua_helper import opcua_client
 
 #Функция жизни приложения
 @asynccontextmanager
